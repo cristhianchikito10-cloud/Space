@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmos Explorer - Explorando el Universo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== VARIABLES Y ESTILOS GENERALES ===== */
+        :root {
+            --primary: #0B0B2E;
+            --secondary: #1A1A4A;
+            --accent: #4A36D6;
+            --accent-light: #6D5CE8;
+            --text: #FFFFFF;
+            --text-secondary: #B0B0D0;
+            --card-bg: rgba(26, 26, 74, 0.7);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(74, 54, 214, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(109, 92, 232, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(74, 54, 214, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(74, 54, 214, 0.4);
+        }
+
+        /* ===== HEADER Y NAVEGACIÓN ===== */
+        header {
+            background-color: rgba(11, 11, 46, 0.95);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent-light);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-light);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-light);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 70px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(74, 54, 214, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(109, 92, 232, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(42, 27, 161, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--text-secondary);
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent-light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(74, 54, 214, 0.1);
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        /* ===== PLANETAS SECTION ===== */
+        .planets {
+            background-color: var(--secondary);
+            position: relative;
+        }
+
+        .planets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .planet-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .planet-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .planet-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .planet-info {
+            padding: 20px;
+        }
+
+        .planet-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent-light);
+        }
+
+        .planet-info p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .planet-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-light);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===== TIENDA SECTION ===== */
+        .shop {
+            position: relative;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .category-btn {
+            background: var(--card-bg);
+            color: var(--text);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-btn.active, .category-btn:hover {
+            background: var(--accent);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .product-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-light);
+        }
+
+        /* ===== USUARIO SECTION ===== */
+        .user {
+            background-color: var(--secondary);
+            position: relative;
+        }
+
+        .user-profile {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-header {
+            display: flex;
+            padding: 30px;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+        }
+
+        .user-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-right: 30px;
+            border: 3px solid white;
+        }
+
+        .user-details h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .stat-card {
+            background-color: rgba(11, 11, 46, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(11, 11, 46, 0.7);
+        }
+
+        .stat-card i {
+            font-size: 2rem;
+            color: var(--accent-light);
+            margin-bottom: 10px;
+        }
+
+        .user-actions {
+            padding: 0 30px 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: #080822;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--accent-light);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-light);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--card-bg);
+            border-radius: 50%;
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--text);
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(0, 0, 0, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-light);
+            transform: rotate(90deg);
+        }
+
+        .modal-planet-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-planet-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .modal-planet-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 30px rgba(74, 54, 214, 0.5);
+        }
+
+        .modal-planet-details h2 {
+            font-size: 2.5rem;
+            color: var(--accent-light);
+            margin-bottom: 10px;
+        }
+
+        .planet-facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .fact {
+            background-color: rgba(11, 11, 46, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .fact:hover {
+            transform: translateY(-5px);
+            background-color: rgba(11, 11, 46, 0.7);
+        }
+
+        .fact-title {
+            font-weight: 700;
+            color: var(--accent-light);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .modal-planet-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .user-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .user-avatar {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .user-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .planets-grid, .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-rocket"></i>
+                    Cosmos Explorer
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#planets">Planetas</a></li>
+                    <li><a href="#shop">Tienda</a></li>
+                    <li><a href="#user">Mi Perfil</a></li>
+                    <li><a href="#" class="btn">Registrarse</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Explora los Misterios del <span style="color: #6D5CE8;">Universo</span></h1>
+                <p>Descubre información fascinante sobre los planetas de nuestro sistema solar, adquiere productos astronómicos y únete a nuestra comunidad de exploradores espaciales.</p>
+                <div class="hero-btns">
+                    <a href="#planets" class="btn">Explorar Planetas</a>
+                    <a href="#shop" class="btn btn-secondary">Visitar Tienda</a>
+                </div>
+            </div>
+        </div>
+        <div class="floating-elements">
+            <div class="floating-element" style="width: 50px; height: 50px; top: 20%; left: 10%; animation-duration: 20s;"></div>
+            <div class="floating-element" style="width: 30px; height: 30px; top: 60%; left: 80%; animation-duration: 15s;"></div>
+            <div class="floating-element" style="width: 70px; height: 70px; top: 40%; left: 70%; animation-duration: 25s;"></div>
+            <div class="floating-element" style="width: 40px; height: 40px; top: 80%; left: 20%; animation-duration: 18s;"></div>
+        </div>
+    </section>
+
+    <!-- Sección Planetas -->
+    <section class="planets" id="planets">
+        <div class="container">
+            <h2 class="section-title">Planetas del Sistema Solar</h2>
+            <div class="planets-grid" id="planets-container">
+                <!-- Los planetas se cargarán aquí con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Tienda -->
+    <section class="shop" id="shop">
+        <div class="container">
+            <h2 class="section-title">Tienda Espacial</h2>
+            <div class="categories">
+                <button class="category-btn active" data-category="all">Todos</button>
+                <button class="category-btn" data-category="telescopes">Telescopios</button>
+                <button class="category-btn" data-category="books">Libros</button>
+                <button class="category-btn" data-category="decor">Decoración</button>
+                <button class="category-btn" data-category="clothing">Ropa</button>
+            </div>
+            <div class="products-grid" id="products-container">
+                <!-- Los productos se cargarán aquí con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Usuario -->
+    <section class="user" id="user">
+        <div class="container">
+            <h2 class="section-title">Mi Perfil</h2>
+            <div class="user-profile">
+                <div class="user-header">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-astronaut"></i>
+                    </div>
+                    <div class="user-details">
+                        <h2>Explorador Espacial</h2>
+                        <p>Miembro desde Enero 2023</p>
+                        <p>Nivel: Astronauta Avanzado</p>
+                    </div>
+                </div>
+                <div class="user-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-globe-americas"></i>
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">Planetas Explorados</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-shopping-cart"></i>
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">Productos Comprados</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-star"></i>
+                        <div class="stat-value">256</div>
+                        <div class="stat-label">Puntos de Experiencia</div>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <button class="btn">Editar Perfil</button>
+                    <button class="btn btn-secondary">Mis Compras</button>
+                    <button class="btn btn-secondary">Configuración</button>
+                    <button class="btn">Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Cosmos Explorer</h3>
+                    <p>Tu ventana al universo. Descubre los misterios del cosmos con nosotros.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Inicio</a></li>
+                        <li><a href="#planets">Planetas</a></li>
+                        <li><a href="#shop">Tienda</a></li>
+                        <li><a href="#user">Mi Perfil</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Recursos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Galería</a></li>
+                        <li><a href="#">Eventos</a></li>
+                        <li><a href="#">Foro</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> info@cosmosexplorer.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Observatorio Starlight, AZ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Cosmos Explorer. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal para información de planetas -->
+    <div class="modal" id="planet-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-planet-info" id="modal-planet-content">
+                <!-- Contenido del modal se cargará aquí con JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== DATOS DE LA APLICACIÓN =====
+        
+        // Datos de los planetas
+        const planets = [
+            {
+                id: 1,
+                name: "Mercurio",
+                image: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "El planeta más cercano al Sol y el más pequeño del sistema solar. Su superficie está llena de cráteres debido a los impactos de asteroides y cometas.",
+                facts: {
+                    "Tipo": "Planeta rocoso",
+                    "Diámetro": "4.879 km",
+                    "Distancia al Sol": "57,9 millones de km",
+                    "Temperatura": "-173°C a 427°C",
+                    "Periodo orbital": "88 días terrestres",
+                    "Gravedad": "3,7 m/s²",
+                    "Lunas": "0"
+                }
+            },
+            {
+                id: 2,
+                name: "Venus",
+                image: "https://images.unsplash.com/photo-1614314107768-6018061b5b72?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "El segundo planeta del sistema solar y el más caliente debido a su densa atmósfera que crea un efecto invernadero extremo.",
+                facts: {
+                    "Tipo": "Planeta rocoso",
+                    "Diámetro": "12.104 km",
+                    "Distancia al Sol": "108,2 millones de km",
+                    "Temperatura": "462°C",
+                    "Periodo orbital": "225 días terrestres",
+                    "Gravedad": "8,87 m/s²",
+                    "Lunas": "0"
+                }
+            },
+            {
+                id: 3,
+                name: "Tierra",
+                image: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "Nuestro hogar, el único planeta conocido que alberga vida. Tiene una atmósfera rica en oxígeno y abundante agua líquida.",
+                facts: {
+                    "Tipo": "Planeta rocoso",
+                    "Diámetro": "12.742 km",
+                    "Distancia al Sol": "149,6 millones de km",
+                    "Temperatura": "-88°C a 58°C",
+                    "Periodo orbital": "365,25 días",
+                    "Gravedad": "9,8 m/s²",
+                    "Lunas": "1"
+                }
+            },
+            {
+                id: 4,
+                name: "Marte",
+                image: "https://images.unsplash.com/photo-1614724837852-896c3c4f0b23?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "Conocido como el planeta rojo, es el objetivo principal de la exploración espacial. Tiene casquetes polares y evidencia de agua en el pasado.",
+                facts: {
+                    "Tipo": "Planeta rocoso",
+                    "Diámetro": "6.779 km",
+                    "Distancia al Sol": "227,9 millones de km",
+                    "Temperatura": "-87°C a -5°C",
+                    "Periodo orbital": "687 días terrestres",
+                    "Gravedad": "3,71 m/s²",
+                    "Lunas": "2"
+                }
+            },
+            {
+                id: 5,
+                name: "Júpiter",
+                image: "https://images.unsplash.com/photo-1630850840627-9e796d7fca98?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "El planeta más grande del sistema solar, un gigante gaseoso con una gran mancha roja que es una tormenta masiva.",
+                facts: {
+                    "Tipo": "Gigante gaseoso",
+                    "Diámetro": "139.820 km",
+                    "Distancia al Sol": "778,5 millones de km",
+                    "Temperatura": "-108°C",
+                    "Periodo orbital": "11,9 años terrestres",
+                    "Gravedad": "24,79 m/s²",
+                    "Lunas": "79"
+                }
+            },
+            {
+                id: 6,
+                name: "Saturno",
+                image: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "Famoso por sus espectaculares anillos, es el segundo planeta más grande del sistema solar. Sus anillos están compuestos principalmente de hielo y roca.",
+                facts: {
+                    "Tipo": "Gigante gaseoso",
+                    "Diámetro": "116.460 km",
+                    "Distancia al Sol": "1.429 millones de km",
+                    "Temperatura": "-138°C",
+                    "Periodo orbital": "29,5 años terrestres",
+                    "Gravedad": "10,44 m/s²",
+                    "Lunas": "82"
+                }
+            },
+            {
+                id: 7,
+                name: "Urano",
+                image: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "Un gigante de hielo que gira de lado, con anillos tenues y muchas lunas. Su color azul verdoso se debe al metano en su atmósfera.",
+                facts: {
+                    "Tipo": "Gigante de hielo",
+                    "Diámetro": "50.724 km",
+                    "Distancia al Sol": "2.871 millones de km",
+                    "Temperatura": "-195°C",
+                    "Periodo orbital": "84 años terrestres",
+                    "Gravedad": "8,87 m/s²",
+                    "Lunas": "27"
+                }
+            },
+            {
+                id: 8,
+                name: "Neptuno",
+                image: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "El planeta más lejano del sistema solar, conocido por sus fuertes vientos y tormentas. Es el único planeta encontrado mediante predicción matemática.",
+                facts: {
+                    "Tipo": "Gigante de hielo",
+                    "Diámetro": "49.244 km",
+                    "Distancia al Sol": "4.495 millones de km",
+                    "Temperatura": "-201°C",
+                    "Periodo orbital": "165 años terrestres",
+                    "Gravedad": "11,15 m/s²",
+                    "Lunas": "14"
+                }
+            }
+        ];
+
+        // Datos de productos
+        const products = [
+            {
+                id: 1,
+                name: "Telescopio Astronómico Profesional",
+                image: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "Telescopio reflector de 150mm para observación planetaria y de espacio profundo.",
+                price: "$459.99",
+                category: "telescopes"
+            },
+            {
+                id: 2,
+                name: "Mapa Estelar Iluminado 3D",
+                image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "Mapa del cielo nocturno con constelaciones iluminadas en 3 dimensiones.",
+                price: "$79.99",
+                category: "decor"
+            },
+            {
+                id: 3,
+                name: "Modelo del Sistema Solar a Escala",
+                image: "https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "Kit educativo con planetas móviles y base con motor para rotación automática.",
+                price: "$129.99",
+                category: "decor"
+            },
+            {
+                id: 4,
+                name: "Guía Completa del Cosmos",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "Libro de astronomía con imágenes espectaculares y explicaciones detalladas.",
+                price: "$34.99",
+                category: "books"
+            },
+            {
+                id: 5,
+                name: "Poster de la Vía Láctea Premium",
+                image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "Impresión de alta calidad de nuestra galaxia en tamaño 60x90cm.",
+                price: "$24.99",
+                category: "decor"
+            },
+            {
+                id: 6,
+                name: "Reloj Solar de Jardín",
+                image: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "Reloj de jardín que funciona con la luz solar, diseño astronómico.",
+                price: "$49.99",
+                category: "decor"
+            },
+            {
+                id: 7,
+                name: "Camiseta Constelaciones",
+                image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "Camiseta de algodón con diseño de constelaciones del hemisferio norte.",
+                price: "$29.99",
+                category: "clothing"
+            },
+            {
+                id: 8,
+                name: "Telescopio para Principiantes",
+                image: "https://images.unsplash.com/photo-1517984522086-2c1f6481691c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                description: "Telescopio refractor de 70mm ideal para iniciarse en la astronomía.",
+                price: "$199.99",
+                category: "telescopes"
+            }
+        ];
+
+        // ===== FUNCIONALIDADES =====
+
+        // Cargar planetas en la página
+        function loadPlanets() {
+            const planetsContainer = document.getElementById('planets-container');
+            
+            planets.forEach(planet => {
+                const planetCard = document.createElement('div');
+                planetCard.className = 'planet-card';
+                planetCard.innerHTML = `
+                    <div class="planet-img" style="background-image: url('${planet.image}')"></div>
+                    <div class="planet-info">
+                        <h3>${planet.name}</h3>
+                        <p>${planet.description}</p>
+                        <button class="btn view-planet-btn" data-id="${planet.id}">Explorar</button>
+                        <div class="planet-stats">
+                            <div class="stat">
+                                <div class="stat-value">${planet.facts["Tipo"].split(" ")[0]}</div>
+                                <div class="stat-label">Tipo</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">${planet.facts["Lunas"]}</div>
+                                <div class="stat-label">Lunas</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">${planet.facts["Periodo orbital"].split(" ")[0]}</div>
+                                <div class="stat-label">Días</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                planetsContainer.appendChild(planetCard);
+            });
+            
+            // Añadir event listeners a los botones
+            document.querySelectorAll('.view-planet-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const planetId = parseInt(this.getAttribute('data-id'));
+                    openPlanetModal(planetId);
+                });
+            });
+        }
+
+        // Cargar productos en la página
+        function loadProducts(category = 'all') {
+            const productsContainer = document.getElementById('products-container');
+            productsContainer.innerHTML = '';
+            
+            const filteredProducts = category === 'all' 
+                ? products 
+                : products.filter(product => product.category === category);
+            
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-img" style="background-image: url('${product.image}')"></div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <div class="product-price">
+                            <div class="price">${product.price}</div>
+                            <button class="btn add-to-cart-btn" data-id="${product.id}">Añadir</button>
+                        </div>
+                    </div>
+                `;
+                productsContainer.appendChild(productCard);
+            });
+            
+            // Añadir event listeners a los botones de añadir al carrito
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    addToCart(productId);
+                });
+            });
+        }
+
+        // Abrir modal con información del planeta
+        function openPlanetModal(planetId) {
+            const planet = planets.find(p => p.id === planetId);
+            const modal = document.getElementById('planet-modal');
+            const modalContent = document.getElementById('modal-planet-content');
+            
+            if (planet) {
+                let factsHTML = '';
+                for (const [key, value] of Object.entries(planet.facts)) {
+                    factsHTML += `
+                        <div class="fact">
+                            <div class="fact-title">${key}</div>
+                            <div>${value}</div>
+                        </div>
+                    `;
+                }
+                
+                modalContent.innerHTML = `
+                    <div class="modal-planet-header">
+                        <div class="modal-planet-img" style="background-image: url('${planet.image}')"></div>
+                        <div class="modal-planet-details">
+                            <h2>${planet.name}</h2>
+                            <p>${planet.description}</p>
+                        </div>
+                    </div>
+                    <div class="planet-facts">
+                        ${factsHTML}
+                    </div>
+                `;
+                
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Cerrar modal
+        function closeModal() {
+            const modal = document.getElementById('planet-modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Añadir producto al carrito
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                // En una aplicación real, aquí se añadiría el producto al carrito
+                // Por ahora, solo mostraremos una alerta
+                alert(`¡${product.name} añadido al carrito!`);
+                
+                // Aquí podríamos actualizar un contador de carrito en la interfaz
+                updateCartCounter();
+            }
+        }
+
+        // Actualizar contador del carrito (simulación)
+        function updateCartCounter() {
+            // En una aplicación real, esto contaría los productos en el carrito
+            // Por ahora, solo mostraremos un mensaje en la consola
+            console.log("Carrito actualizado");
+        }
+
+        // Filtrar productos por categoría
+        function setupCategoryFilters() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remover clase active de todos los botones
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Añadir clase active al botón clickeado
+                    this.classList.add('active');
+                    
+                    // Obtener la categoría
+                    const category = this.getAttribute('data-category');
+                    
+                    // Cargar productos de esa categoría
+                    loadProducts(category);
+                });
+            });
+        }
+
+        // ===== INICIALIZACIÓN =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar planetas y productos
+            loadPlanets();
+            loadProducts();
+            
+            // Configurar filtros de categoría
+            setupCategoryFilters();
+            
+            // Event listeners para cerrar modal
+            document.querySelector('.close-modal').addEventListener('click', closeModal);
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('planet-modal');
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Navegación suave
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Cerrar menú móvil si está abierto
+                        document.querySelector('.nav-links').classList.remove('active');
+                    }
+                });
+            });
+            
+            // Menú hamburguesa para móviles
+            document.querySelector('.hamburger').addEventListener('click', function() {
+                const navLinks = document.querySelector('.nav-links');
+                navLinks.classList.toggle('active');
+            });
+            
+            // Crear elementos flotantes dinámicamente
+            createFloatingElements();
+        });
+
+        // Crear elementos flotantes para el fondo
+        function createFloatingElements() {
+            const floatingContainer = document.querySelector('.floating-elements');
+            const count = 15;
+            
+            for (let i = 0; i < count; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                
+                // Tamaño aleatorio entre 10px y 70px
+                const size = Math.floor(Math.random() * 60) + 10;
+                
+                // Posición aleatoria
+                const top = Math.floor(Math.random() * 100);
+                const left = Math.floor(Math.random() * 100);
+                
+                // Duración de animación aleatoria
+                const duration = Math.floor(Math.random() * 20) + 10;
+                
+                // Retraso aleatorio
+                const delay = Math.floor(Math.random() * 20);
+                
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                element.style.top = `${top}%`;
+                element.style.left = `${left}%`;
+                element.style.animationDuration = `${duration}s`;
+                element.style.animationDelay = `${delay}s`;
+                
+                floatingContainer.appendChild(element);
+            }
+        }
+    </script>
+</body>
+</html>
