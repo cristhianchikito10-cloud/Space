@@ -110,7 +110,7 @@ const planets = [
     {
         id: 8,
         name: "Neptuno",
-        image: "",
+        image: "https://pbs.twimg.com/media/G610EDwXoAA7DiJ?format=png&name=small",
         description: "El planeta más lejano del sistema solar, conocido por sus fuertes vientos y tormentas. Es el único planeta encontrado mediante predicción matemática.",
         facts: {
             "Tipo": "Gigante de hielo",
