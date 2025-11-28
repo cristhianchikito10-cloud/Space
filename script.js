@@ -5,7 +5,7 @@ const planets = [
     {
         id: 1,
         name: "Mercurio",
-        image: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        image: "https://pbs.twimg.com/media/G610W0yXQAA1mpy?format=png&name=small",
         description: "El planeta más cercano al Sol y el más pequeño del sistema solar. Su superficie está llena de cráteres debido a los impactos de asteroides y cometas.",
         facts: {
             "Tipo": "Planeta rocoso",
@@ -65,14 +65,14 @@ const planets = [
     {
         id: 5,
         name: "Júpiter",
-        image: "https://images.unsplash.com/photo-1630850840627-9e796d7fca98?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        image: "https://pbs.twimg.com/media/G61z21lWQAAARY8?format=png&name=360x360",
         description: "El planeta más grande del sistema solar, un gigante gaseoso con una gran mancha roja que es una tormenta masiva.",
         facts: {
             "Tipo": "Gigante gaseoso",
             "Diámetro": "139.820 km",
             "Distancia al Sol": "778,5 millones de km",
             "Temperatura": "-108°C",
-            "Periodo orbital": "11,9 años terrestres",
+            "Periodo orbital": "4,333 dias terrestres",
             "Gravedad": "24,79 m/s²",
             "Lunas": "79"
         }
@@ -80,14 +80,14 @@ const planets = [
     {
         id: 6,
         name: "Saturno",
-        image: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        image: "https://pbs.twimg.com/media/G61y4QuW8AACUAm?format=png&name=360x360",
         description: "Famoso por sus espectaculares anillos, es el segundo planeta más grande del sistema solar. Sus anillos están compuestos principalmente de hielo y roca.",
         facts: {
             "Tipo": "Gigante gaseoso",
             "Diámetro": "116.460 km",
             "Distancia al Sol": "1.429 millones de km",
             "Temperatura": "-138°C",
-            "Periodo orbital": "29,5 años terrestres",
+            "Periodo orbital": "10,759 dias terrestres",
             "Gravedad": "10,44 m/s²",
             "Lunas": "82"
         }
@@ -95,14 +95,14 @@ const planets = [
     {
         id: 7,
         name: "Urano",
-        image: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        image: "https://pbs.twimg.com/media/G61zevuXoAA74wg?format=png&name=small",
         description: "Un gigante de hielo que gira de lado, con anillos tenues y muchas lunas. Su color azul verdoso se debe al metano en su atmósfera.",
         facts: {
             "Tipo": "Gigante de hielo",
             "Diámetro": "50.724 km",
             "Distancia al Sol": "2.871 millones de km",
             "Temperatura": "-195°C",
-            "Periodo orbital": "84 años terrestres",
+            "Periodo orbital": "30,687 dias terrestres",
             "Gravedad": "8,87 m/s²",
             "Lunas": "27"
         }
@@ -110,14 +110,14 @@ const planets = [
     {
         id: 8,
         name: "Neptuno",
-        image: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        image: "",
         description: "El planeta más lejano del sistema solar, conocido por sus fuertes vientos y tormentas. Es el único planeta encontrado mediante predicción matemática.",
         facts: {
             "Tipo": "Gigante de hielo",
             "Diámetro": "49.244 km",
             "Distancia al Sol": "4.495 millones de km",
             "Temperatura": "-201°C",
-            "Periodo orbital": "165 años terrestres",
+            "Periodo orbital": "60,190 dias terrestres",
             "Gravedad": "11,15 m/s²",
             "Lunas": "14"
         }
